@@ -6,7 +6,7 @@
 
 #if defined(ARDUINO_ARCH_ESP32)
 
-enum CytronMD_MOTOR_MODE {
+enum CytronMD_Motor_Mode {
   PWM_DIR,
   PWM_PWM,
 };
@@ -14,11 +14,11 @@ enum CytronMD_MOTOR_MODE {
 class CytronMD
 {
   public:
-    CytronMD(CytronMD_MOTOR_MODE mode, uint8_t pin1, uint8_t pin2, uint8_t channel = 0, uint32_t freq = 0, uint8_t resolution = 0);
+    CytronMD(CytronMD_Motor_Mode mode, uint8_t pin1, uint8_t pin2, uint8_t channel = 0, uint32_t freq = 0, uint8_t resolution = 0);
     void setSpeed(int32_t speed);
     
   protected:
-    CytronMD_MOTOR_MODE _mode;
+    CytronMD_Motor_Mode _mode;
     
   	uint8_t _pin1;
     uint8_t _pin2;
