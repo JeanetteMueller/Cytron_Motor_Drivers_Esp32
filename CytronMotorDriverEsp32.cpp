@@ -9,7 +9,7 @@ CytronMD::CytronMD(CytronMD_Motor_Mode mode, uint8_t pin1, uint8_t pin2, uint32_
   _pin1 = pin1;
   _pin2 = pin2;
   _channel = nextChannel;  // set automatically
-  _maxSpeed = (pow(2, resolution) - 1);
+  _maxSpeed = (1 << resolution) - 1;
 
   pinMode(_pin1, OUTPUT);
   pinMode(_pin2, OUTPUT);
@@ -50,7 +50,7 @@ void CytronMD::setSpeed(int32_t speed)
   switch (_mode)
   {
   case PWM_DIR:
-    ledcWrite(_channel, setSpeed);
+    ledcWriteChannel(_channel, setSpeed);
 
     if (speed >= 0)
     {

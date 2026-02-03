@@ -27,7 +27,7 @@ protected:
   uint8_t _pin1;
   uint8_t _pin2;
   uint8_t _channel;
-  uint32_t _maxSpeed;
+  int32_t _maxSpeed;
 };
 
 #else
