@@ -1,5 +1,6 @@
 #include "CytronMotorDriverEsp32.h"
 #include <math.h>
+#include "soc/ledc_struct.h"
 
 uint8_t CytronMD::nextChannel = 0;
 
@@ -50,7 +51,9 @@ void CytronMD::setSpeed(int32_t speed)
   switch (_mode)
   {
   case PWM_DIR:
-    ledcWriteChannel(_channel, setSpeed);
+    // ledcWriteChannel(_channel, setSpeed);
+
+    setChannelWithDuty(_channel, setSpeed);
 
     if (speed >= 0)
     {
@@ -65,14 +68,26 @@ void CytronMD::setSpeed(int32_t speed)
   case PWM_PWM:
     if (speed >= 0)
     {
-      ledcWriteChannel(_channel, setSpeed);
-      ledcWriteChannel(_channel + 1, 0);
+      // ledcWriteChannel(_channel, setSpeed);
+      // ledcWriteChannel(_channel + 1, 0);
+
+      setChannelWithDuty(_channel, setSpeed);
+      setChannelWithDuty(_channel + 1, 0);
     }
     else
     {
-      ledcWriteChannel(_channel, 0);
-      ledcWriteChannel(_channel + 1, setSpeed);
+      // ledcWriteChannel(_channel, 0);
+      // ledcWriteChannel(_channel + 1, setSpeed);
+
+      setChannelWithDuty(_channel, 0);
+      setChannelWithDuty(_channel+ 1, setSpeed);
     }
     break;
   }
+}
+
+void CytronMD::setChannelWithDuty(uint8_t channel, uint32_t duty) {
+  LEDC.channel_group[0].channel[channel].duty.duty = duty << 4;
+    LEDC.channel_group[0].channel[channel].conf0.sig_out_en = 1;
+    LEDC.channel_group[0].channel[channel].conf1.duty_start = 1;
 }

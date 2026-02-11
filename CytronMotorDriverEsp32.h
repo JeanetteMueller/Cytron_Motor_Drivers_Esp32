@@ -20,6 +20,7 @@ public:
 
 private:
   static uint8_t nextChannel; // Statischer Zähler
+  void setChannelWithDuty(uint8_t channel, uint32_t duty);
 
 protected:
   CytronMD_Motor_Mode _mode;
